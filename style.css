@@ -18,6 +18,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 .btn-app-bar {
@@ -32,17 +33,15 @@ body {
     margin: 0px 8px;
 }
 
-
-
 main {
     padding: 30px;
 }
 
 .title-panel {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 hr {
@@ -60,11 +59,11 @@ hr {
 }
 
 .disciplina-item {
-    width: 200px;
+    width: 45%;
     padding: 20px 0px;
     background-color: #0a9396;
     border-radius: 10px;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -79,17 +78,23 @@ hr {
     background-color: #005f73;
 }
 
+.list-turmas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .card-item-turma {
-    width: 100%;
+    width: 45%;
     height: 50px;
     background-color: #0a9396;
     border-radius: 10px;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: white;
     display: flex;
     align-items: center;
     padding-left: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
     text-decoration: none;
     gap: 10px;
@@ -107,21 +112,22 @@ hr {
 }
 
 .category-class-item {
-    height: 70px;
-    width: 200px;
+    width: 45%;
+    padding: 15px 0px;
     background-color: #0a9396;
     border-radius: 10px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: white;
     display: flex;
-    padding: 50px 10px;
+    justify-content: space-around;
+    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
     box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
     gap: 5px;
-    margin-bottom: 10px;
     cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .category-class-item:hover {
@@ -141,7 +147,7 @@ hr {
     background-color: #0a9396;
     border-radius: 10px;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     padding: 0px 15px;
@@ -173,7 +179,7 @@ hr {
     color: white;
     display: inline-block;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-weight: bold;
 }
 
