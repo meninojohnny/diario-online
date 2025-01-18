@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #edf6f9;
+}
+
+.app-bar {
+    background-color: #005f73;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
+    color: white; 
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-app-bar {
+    font-size: 1.5rem;
+    width: 50px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    margin: 0px 8px;
+}
+
+
+
+main {
+    padding: 30px;
+}
+
+.title-panel {
+    font-weight: bold;
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+hr {
+    margin-bottom: 20px;
+}
+
+.title-panel i {
+    margin-right: 10px;
+}
+
+.list-disciplina {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.disciplina-item {
+    width: 200px;
+    padding: 20px 0px;
+    background-color: #0a9396;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
+    text-decoration: none;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.disciplina-item:hover {
+    background-color: #005f73;
+}
+
+.card-item-turma {
+    width: 100%;
+    height: 50px;
+    background-color: #0a9396;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
+    text-decoration: none;
+    gap: 10px;
+}
+
+.card-item-turma:hover {
+    background-color: #005f73;
+}
+
+.list-category-class {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.category-class-item {
+    height: 70px;
+    width: 200px;
+    background-color: #0a9396;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    color: white;
+    display: flex;
+    padding: 50px 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
+    gap: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.category-class-item:hover {
+    background-color: #005f73;
+}
+
+.panel-aluno-class,
+.panel-nota-class {
+    margin-top: 30px;
+}
+
+.list-aluno {
+    margin-top: 15px;
+}
+
+.aluno-item {
+    background-color: #0a9396;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 10px rgba(73, 80, 87, .6);
+}
+
+.aluno-item i {
+    margin-right: 10px;
+}
+
+.nome-aluno {
+    width: 100%;
+    padding: 10px 5px;
+}
+
+.list-nota {
+    margin-top: 10px;
+}
+
+.periodo {
+    margin-bottom: 50px;
+}
+
+.periodo-title,
+.mes-title {
+    background-color: #57cc99;
+    padding: 10px 20px;
+    color: white;
+    display: inline-block;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.nota-aluno {
+    border-left: 1px solid white;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nota-header {
+    font-weight: bold;
+    background-color: #264653;
+}
+
+.mes-registro-item {
+    margin-bottom: 50px;
+}
+
+.registro-atividade-item {
+    background-color: #0a9396;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.data-registro {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid white;
+    font-weight: bold;
+}
