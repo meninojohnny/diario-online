@@ -151,19 +151,92 @@ hr {
     margin-top: 30px;
 }
 
+.header-list-alunos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btns-aluno-list {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-edit-list-alunos,
+.btn-cancel-list-alunos,
+.btn-save-list-alunos {
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-edit-list-alunos {
+    background-color: #00b4d8;
+}
+
+.btn-cancel-list-alunos {
+    background-color: #ef233c;
+    display: none;
+}
+
+.btn-save-list-alunos {
+    background-color: #38b000;
+    display: none;
+}
+
+.btn-edit-list-alunos:hover {
+    background-color: #087388;
+}
+
+.form-add-aluno {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-add-aluno {
+    color: white;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #2ec4b6;
+}
+
+.btn-remove-aluno {
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e71d36;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    display: none;
+}
+
+.btn-add-aluno:hover {
+    background-color: #1c786f;
+}
+
 .list-aluno {
     margin-top: 15px;
 }
 
 .aluno-item {
+    display: flex;
+    margin-bottom: 10px;
+
+    gap: 10px;
+}
+
+.aluno-item-content {
     background-color: #0a9396;
+    width: 100%;
     border-radius: 10px;
     color: white;
     font-size: 1rem;
     display: flex;
     align-items: center;
     padding: 0px 15px;
-    margin-bottom: 10px;
     box-shadow: 0px 0px 5px rgba(73, 80, 87, .4);
 }
 

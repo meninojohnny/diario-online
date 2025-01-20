@@ -46,17 +46,31 @@
     
             </div>
     
-            <div class="panel-aluno-class" style="display: none">
-    
-                <span class="title-panel"><i class="fa-solid fa-users"></i> Alunos</span>
+            <div class="panel-aluno-class">
+
+                <div class="header-list-alunos">
+                    <span class="title-panel"><i class="fa-solid fa-users"></i> Alunos</span>
+
+                    <div class="btns-aluno-list">
+                        <span class="btn-edit-list-alunos" onclick="editarListAluno()"><i class="fa-solid fa-pen"></i></span>
+                        <span class="btn-cancel-list-alunos"><i class="fa-solid fa-xmark"></i></span>
+                        <span class="btn-save-list-alunos"><i class="fa-solid fa-check"></i></span>
+                    </div>
+
+                </div>
     
                 <hr>
+
+                <div class="form-add-aluno">
+                    <input type="text" class="form-control campo-nome-aluno" placeholder="Nome do Aluno" aria-label="Username" aria-describedby="basic-addon1">
+                    <span class="btn-add-aluno"><i class="fa-solid fa-add" onclick="adicionarAluno()"></i></span>
+                </div>
     
                 <div class="list-aluno"></div>
     
             </div>
     
-            <div class="panel-nota-class" >
+            <div class="panel-nota-class" style="display: none;">
     
                 <span class="title-panel"><i class="fa-regular fa-clipboard"></i> Notas</span>
     
@@ -136,135 +150,69 @@
     
             </div>
     
-            <div class="panel-registro-aulas" style="display: none;">
+            <div class="panel-registro-aulas" style="display: none">
                 <span class="title-panel"><i class="fa-solid fa-list-ul"></i> Registro de Aulas</span>
     
                 <hr>
     
                 <div class="mes-registro-item">
-    
                     <div class="mes-title">Janeiro</div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
+                    <div class="list-registro-janeiro"></div>
                 </div>
     
                 <div class="mes-registro-item">
-    
                     <div class="mes-title">Fevereiro</div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
+                    <div class="list-registro-fevereiro"></div>
                 </div>
     
                 <div class="mes-registro-item">
-    
                     <div class="mes-title">Março</div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
-                    <div class="list-registro">
-                        <div class="registro-atividade-item">
-                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> 13/01/2024</span>
-                            <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda quam neque laborum
-                                voluptas deleniti ea voluptatibus earum laudantium veniam temporibus, non, architecto minus
-                                cumque numquam obcaecati? Ab laborum eligendi vero.</span>
-                        </div>
-                    </div>
-    
+                    <div class="list-registro-março"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Abril</div>
+                    <div class="list-registro-abril"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Maio</div>
+                    <div class="list-registro-maio"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Junho</div>
+                    <div class="list-registro-junho"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Julho</div>
+                    <div class="list-registro-julho"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Agosto</div>
+                    <div class="list-registro-agosto"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Setembro</div>
+                    <div class="list-registro-setembro"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Outubro</div>
+                    <div class="list-registro-outubro"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Novembro</div>
+                    <div class="list-registro-novembro"></div>
+                </div>
+
+                <div class="mes-registro-item">
+                    <div class="mes-title">Dezembro</div>
+                    <div class="list-registro-dezembro"></div>
                 </div>
     
             </div>

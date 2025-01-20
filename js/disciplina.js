@@ -1,4 +1,4 @@
-import {findDisciplinaById, findTurmaById, findAlunoByTurma, findNota} from './servico.js';
+import {findDisciplinaById, findTurmaById, findAlunoByTurma, findNota, findRegistro} from './servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
@@ -16,6 +16,7 @@ async function init() {
         adicionarAppBar();
         criarAlunoList();
         criarNotaList();
+        criarRegistroList();
         mostrarMain();
 }
 
@@ -48,8 +49,11 @@ function criarAlunoList() {
 
 function criarAlunoItem(item) {
     const alunoItem = `<div class="aluno-item">
-                            <i class="fa-solid fa-user"></i>
-                            <span class="nome-aluno">${item.nome}</span>
+                            <div class="aluno-item-content">
+                                <i class="fa-solid fa-user"></i>
+                                <span class="nome-aluno">${item.nome}</span>
+                            </div>
+                            <span class="btn-remove-aluno"><i class="fa-solid fa-trash-can"></i></span>
                         </div>`;
     return alunoItem;
 }
@@ -79,8 +83,44 @@ async function criarNotaItem(aluno, periodo) {
     return notaItem;
 }
 
-init();
-
-window.teste = function() {
-    console.log("teste");
+async function criarRegistroList() {
+    const meses = ["janeiro", "fevereiro"];
+    for (const mes of meses) {
+        const registros = await findRegistro(disciplinaId, turmaId, mes);
+        if (registros.length > 0) {
+            for (const r of registros) {
+                var registroList = document.querySelector(`.list-registro-${mes}`);
+                registroList.innerHTML = "";
+                registroList.innerHTML += criarRegistroItem(r);
+            }  
+        }
+                  
+    }
 }
+
+function criarRegistroItem(r) {
+    var registroItem = `<div class="registro-atividade-item">
+                            <span class="data-registro"><i class="fa-solid fa-calendar-days"></i> ${r.data}</span>
+                            <span>${r.descricao}</span>
+                        </div>`;
+    return registroItem;
+}
+
+window.editarListAluno = function() {
+    document.querySelector(".btn-edit-list-alunos").style.display = "none";
+    document.querySelector(".btn-cancel-list-alunos").style.display = "block";
+    document.querySelector(".btn-save-list-alunos").style.display = "block";
+    document.querySelector(".btn-remove-aluno").style.display = "flex";
+}
+
+var alunosAdicionados = [];
+window.adicionarAluno = function() {
+    var campoNome = document.querySelector(".campo-nome-aluno");
+    if (campoNome.value.length != 0) {
+        alunosAdicionados.push(campoNome.value.trim());
+        const alunoList = document.querySelector(".list-aluno");
+        alunoList.innerHTML += criarAlunoItem({nome: campoNome.value});
+    }
+}
+
+init();

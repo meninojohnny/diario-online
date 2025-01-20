@@ -156,4 +156,28 @@ export async function findNota(alunoId, disciplinaId, periodo) {
   }
 }
 
+export async function findRegistro(disciplinaId, turmaId, mes) {
+  try {
+      const q = query(collection(db, "registro"), 
+        where("disciplina", "==", disciplinaId,),
+        where("turma", "==", turmaId,),
+        where("mes", "==", mes,)
+      );
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+          const registros = [];
+          querySnapshot.forEach((doc) => {
+            registros.push({ id: doc.id, ...doc.data() });
+          });
+          return registros;
+      } else {
+          console.log("Nenhuma registro encontrado");
+          return [];
+      }
+  } catch (e) {
+      console.error("Erro ao buscar registro");
+  }
+}
+
 // adicionarNota();
