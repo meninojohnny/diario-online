@@ -1,4 +1,4 @@
-import {findAllDisciplina} from './servico.js';
+import {findAllDisciplina} from 'servico.js';
 
 var disciplinas = [];
 

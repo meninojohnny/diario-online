@@ -1,4 +1,4 @@
-import {findDisciplinaById, findTurmaById, findAlunoByTurma, findNota, findRegistro} from './servico.js';
+import {findDisciplinaById, findTurmaById, findAlunoByTurma, findNota, findRegistro} from '../servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
