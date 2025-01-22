@@ -1,4 +1,6 @@
-import {findAllDisciplina} from 'servico.js';
+import {findAllDisciplina} from './servico.js';
+
+console.log("Aqui");
 
 var disciplinas = [];
 
@@ -20,7 +22,7 @@ function criarDisciplinaList() {
 };
 
 function criarDisciplinaItem(item) {
-    var disciplinaItem = `<a class="disciplina-item" href="./pages/turma.html?disciplina=${item.id}">
+    var disciplinaItem = `<a class="disciplina-item" href="turma.html?disciplina=${item.id}">
                             <span><i class="${item.icone}"></i></span>
                             <span>${item.nome}</span>
                          </a>`;
