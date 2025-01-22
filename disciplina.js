@@ -1,4 +1,8 @@
-import {findDisciplinaById, findTurmaById, findAlunoByTurma, findNota, findRegistro} from './servico.js';
+import {
+    findDisciplinaById, findTurmaById, 
+    findAlunoByTurma, findNota, 
+    findRegistro, adicionarNota, 
+    adicionarAluno, removerAluno} from './servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
@@ -53,7 +57,7 @@ function criarAlunoItem(item) {
                                 <i class="fa-solid fa-user"></i>
                                 <span class="nome-aluno">${item.nome}</span>
                             </div>
-                            <span class="btn-remove-aluno"><i class="fa-solid fa-trash-can"></i></span>
+                            <span id=${item.id} onclick="removerAluno(id)" class="btn-remove-aluno"><i class="fa-solid fa-trash-can"></i></span>
                         </div>`;
     return alunoItem;
 }
@@ -73,12 +77,14 @@ async function criarNotaItem(aluno, periodo) {
     var nota = await findNota(aluno.id, disciplinaId, periodo);
     nota = nota[0];
     var notaItem = `<div class="aluno-item">
-                <span class="nome-aluno">${aluno.nome}</span>
-                <span class="nota-aluno-tg">${nota.tg}</span>
-                <span class="nota-aluno-ti">${nota.ti}</span>
-                <span class="nota-aluno-p">${nota.p}</span>
-                <span class="nota-aluno-av">${nota.av}</span>
-                <span class="nota-aluno-m">${nota.m}</span>
+                <div class="aluno-item-content">
+                    <span class="nome-aluno">${aluno.nome}</span>
+                    <span class="nota-aluno-tg">${nota.tg}</span>
+                    <span class="nota-aluno-ti">${nota.ti}</span>
+                    <span class="nota-aluno-p">${nota.p}</span>
+                    <span class="nota-aluno-av">${nota.av}</span>
+                    <span class="nota-aluno-m">${nota.m}</span>
+                <div>
             </div>`;
     return notaItem;
 }
@@ -110,17 +116,26 @@ window.editarListAluno = function() {
     document.querySelector(".btn-edit-list-alunos").style.display = "none";
     document.querySelector(".btn-cancel-list-alunos").style.display = "block";
     document.querySelector(".btn-save-list-alunos").style.display = "block";
-    document.querySelector(".btn-remove-aluno").style.display = "flex";
+    document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
+        btn.style.display = "flex";
+    });
 }
 
-var alunosAdicionados = [];
-window.adicionarAluno = function() {
+window.adicionarAluno = async function() {
     var campoNome = document.querySelector(".campo-nome-aluno");
-    if (campoNome.value.length != 0) {
-        alunosAdicionados.push(campoNome.value.trim());
+    var value = campoNome.value;
+    if (value.length != 0) {
         const alunoList = document.querySelector(".list-aluno");
-        alunoList.innerHTML += criarAlunoItem({nome: campoNome.value});
+        var aluno = await adicionarAluno(value, turmaId);
+        await adicionarNota(aluno.id);
+        alunoList.innerHTML += criarAlunoItem(aluno);
+        campoNome.value = "";
     }
+}
+
+window.removerAluno = async function(id) {
+    removerAluno(id);
+    criarAlunoList();
 }
 
 init();

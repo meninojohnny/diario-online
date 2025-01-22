@@ -1,7 +1,7 @@
 // service.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -26,13 +26,27 @@ export async function adicionarDisciplina(nome) {
   }
 }
 
-export async function adicionarAluno() {
+export async function adicionarAluno(nome, turmaId) {
   try {
     const docRef = await addDoc(collection(db, "aluno"), { 
-      nome: "João Vitor da Silva Pereira"
+      nome: nome,
+      turma: turmaId
     });
+    return docRef;
   } catch (e) {
     console.error("Erro ao adicionar documento:", e);
+  }
+}
+
+export async function removerAluno(alunoId) {
+  try {
+      const docRef = doc(db, "aluno", alunoId);
+
+      await deleteDoc(docRef);
+
+      console.log(`Aluno com ID ${alunoId} removido com sucesso!`);
+  } catch (error) {
+      console.error("Erro ao remover o documento:", error);
   }
 }
 
@@ -114,21 +128,27 @@ export async function findAlunoByTurma(turmaId) {
   }
 }
 
-export async function adicionarNota() {
-  try {
-    const docRef = await addDoc(collection(db, "nota"), {
-      aluno: "4RblWc1CFRfiPmWyuf4T",
-      disciplina: "GARGV03ZI8YkJEngxDfl",
-      periodo: "quarto",
-      tg: "0.0",
-      ti: "0.0",
-      p: "0.0",
-      av: "0.0",
-      m: "0.0"
-    });
-    console.log("Documento adicionado com ID:", docRef.id);
-  } catch (e) {
-    console.error("Erro ao adicionar documento:", e);
+export async function adicionarNota(alunoId) {
+  var disciplinas = await findAllDisciplina();
+  var periodos = ["primeiro", "segundo", "terceiro", "quarto"];
+
+  for (var d of disciplinas) {
+    for (var p of periodos) {
+      try {
+        const docRef = await addDoc(collection(db, "nota"), {
+          aluno: alunoId,
+          disciplina: d.id,
+          periodo: p,
+          tg: "0.0",
+          ti: "0.0",
+          p: "0.0",
+          av: "0.0",
+          m: "0.0"
+        });
+      } catch (e) {
+        console.error("Erro ao adicionar documento:", e);
+      }
+    }
   }
 }
 
@@ -179,5 +199,3 @@ export async function findRegistro(disciplinaId, turmaId, mes) {
       console.error("Erro ao buscar registro");
   }
 }
-
-// adicionarNota();

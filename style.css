@@ -285,6 +285,7 @@ hr {
 .nota-header {
     font-weight: bold;
     background-color: #264653;
+    margin-bottom: 10px;
 }
 
 .mes-registro-item {
