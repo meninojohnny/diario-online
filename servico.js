@@ -1,7 +1,7 @@
 // service.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -28,22 +28,55 @@ export async function adicionarDisciplina(nome) {
 
 export async function adicionarAluno(nome, turmaId) {
   try {
-    const docRef = await addDoc(collection(db, "aluno"), { 
+    const docRef = await addDoc(collection(db, "aluno"), {
       nome: nome,
       turma: turmaId
     });
-    return docRef;
+    return docRef.id;
   } catch (e) {
     console.error("Erro ao adicionar documento:", e);
+  }
+}
+
+export async function findAlunoById(id) {
+  try {
+      const docRef = doc(db, "aluno", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+          return docSnap.data();
+      } else {
+          console.log("Nenhum documento encontrado com o ID fornecido.");
+      }
+  } catch (e) {
+      console.error("Erro ao buscar o documento:", e);
+  }
+}
+
+export async function findAlunoByTurma(turmaId) {
+  try {
+      const q = query(collection(db, "aluno"), where("turma", "==", turmaId), orderBy("nome", "asc"));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+          const alunos = [];
+          querySnapshot.forEach((doc) => {
+            alunos.push({ id: doc.id, ...doc.data() });
+          });
+          return alunos;
+      } else {
+          console.log("Nenhuma aluno encontrado com a turma de id:", turmaId);
+          return [];
+      }
+  } catch (e) {
+      console.error("Erro ao buscar aluno pela turma de id:", e);
   }
 }
 
 export async function removerAluno(alunoId) {
   try {
       const docRef = doc(db, "aluno", alunoId);
-
       await deleteDoc(docRef);
-
       console.log(`Aluno com ID ${alunoId} removido com sucesso!`);
   } catch (error) {
       console.error("Erro ao remover o documento:", error);
@@ -81,52 +114,36 @@ export async function findDisciplinaById(id) {
 
 export async function findAllTurma() {
   try {
-    const querySnapshot = await getDocs(collection(db, "turma"));
-    const disciplinas = [];
+    const q = query(collection(db, "turma"), orderBy("nome", "asc"));
+    const querySnapshot = await getDocs(q);
+    const turmas = [];
     querySnapshot.forEach((doc) => {
-      disciplinas.push({ id: doc.id, ...doc.data() });
+      turmas.push({ id: doc.id, ...doc.data() });
     });
-    return disciplinas;
+    return turmas;
   } catch (e) {
     console.error("Erro ao obter documentos:", e);
     return [];
   }
 }
 
+
 export async function findTurmaById(id) {
   try {
-      const docRef = doc(db, "turma", id);
+      const docRef = doc(db, "turma", id); // Consulta direta pelo ID do documento
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-          return docSnap.data();
+          return { id: docSnap.id, ...docSnap.data() };
       } else {
-          console.log("Nenhum documento encontrado com o ID fornecido.");
+          console.log("Nenhuma turma encontrada com o ID:", id);
+          return null;
       }
   } catch (e) {
-      console.error("Erro ao buscar o documento:", e);
+      console.error("Erro ao buscar turma pelo ID:", e);
   }
 }
 
-export async function findAlunoByTurma(turmaId) {
-  try {
-      const q = query(collection(db, "aluno"), where("turma", "==", turmaId));
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-          const alunos = [];
-          querySnapshot.forEach((doc) => {
-            alunos.push({ id: doc.id, ...doc.data() });
-          });
-          return alunos;
-      } else {
-          console.log("Nenhuma aluno encontrado com a turma de id:", turmaId);
-          return [];
-      }
-  } catch (e) {
-      console.error("Erro ao buscar aluno pela turma de id:", e);
-  }
-}
 
 export async function adicionarNota(alunoId) {
   var disciplinas = await findAllDisciplina();
@@ -173,6 +190,24 @@ export async function findNota(alunoId, disciplinaId, periodo) {
       }
   } catch (e) {
       console.error("Erro ao buscar nota");
+  }
+}
+
+export async function removerNotas(alunoId) {
+  try {
+      const q = query(collection(db, "nota"), where("aluno", "==", alunoId));
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+          querySnapshot.forEach(async (documento) => {
+              const docRef = doc(db, "nota", documento.id);
+              await deleteDoc(docRef);
+              console.log(`Nota com ID ${documento.id} removido.`);
+          });
+      } else {
+          console.log("Nenhuma nota encontrada.");
+      }
+  } catch (error) {
+      console.error("Erro ao remover notas:", error);
   }
 }
 

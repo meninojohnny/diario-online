@@ -2,7 +2,8 @@ import {
     findDisciplinaById, findTurmaById, 
     findAlunoByTurma, findNota, 
     findRegistro, adicionarNota, 
-    adicionarAluno, removerAluno} from './servico.js';
+    adicionarAluno, removerAluno, 
+    removerNotas} from './servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
@@ -13,15 +14,19 @@ var alunos = []
 async function init() {
         params = new URLSearchParams(window.location.search);
         disciplinaId = params.get('disciplina');
-        turmaId = params.get('turma');  
+        turmaId = params.get('turma');
         disciplina = await findDisciplinaById(disciplinaId);
         turma = await findTurmaById(turmaId);
         alunos = await findAlunoByTurma(turmaId);
         adicionarAppBar();
-        criarAlunoList();
-        criarNotaList();
+        criarPanels();
         criarRegistroList();
         mostrarMain();
+}
+
+function criarPanels() {
+    criarAlunoList();
+    criarNotaList();
 }
 
 function mostrarMain() {
@@ -31,7 +36,7 @@ function mostrarMain() {
 
 function adicionarAppBar() {
     const textAppBar = document.querySelector(".app-bar");
-    textAppBar.innerHTML = `<a class="btn-back-app-bar" href="../pages/turma.html?disciplina=${disciplinaId}"><i class="fa-solid fa-arrow-left"></i></a>
+    textAppBar.innerHTML = `<a class="btn-back-app-bar" href="turma.html?disciplina=${disciplinaId}"><i class="fa-solid fa-arrow-left"></i></a>
                             <span class="text-app-bar">${turma.nome} - ${disciplina.nome}</span> 
                             <a class="btn-app-bar" href="../index.html"><i class="fa-solid fa-house"></i></a>`;
 }
@@ -41,9 +46,11 @@ window.mostrarPanel = function(panel) {
     document.querySelector(".panel-nota-class").style.display = "none";
     document.querySelector(".panel-registro-aulas").style.display = "none";
     document.querySelector(`.${panel}`).style.display = "block";
+
+    fecharEditarListAluno();
 }
 
-function criarAlunoList() {
+async function criarAlunoList() {
     const alunoList = document.querySelector(".list-aluno");
     alunoList.innerHTML = "";
     alunos.forEach(item => {
@@ -112,30 +119,43 @@ function criarRegistroItem(r) {
     return registroItem;
 }
 
-window.editarListAluno = function() {
+window.abrirEditarListAluno = function() {
     document.querySelector(".btn-edit-list-alunos").style.display = "none";
     document.querySelector(".btn-cancel-list-alunos").style.display = "block";
-    document.querySelector(".btn-save-list-alunos").style.display = "block";
     document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
         btn.style.display = "flex";
     });
+    document.querySelector(".form-add-aluno").style.display = "flex";
+}
+
+window.fecharEditarListAluno = function() {
+    document.querySelector(".btn-edit-list-alunos").style.display = "block";
+    document.querySelector(".btn-cancel-list-alunos").style.display = "none";
+    document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
+        btn.style.display = "none";
+    });
+    document.querySelector(".form-add-aluno").style.display = "none";
 }
 
 window.adicionarAluno = async function() {
     var campoNome = document.querySelector(".campo-nome-aluno");
     var value = campoNome.value;
     if (value.length != 0) {
-        const alunoList = document.querySelector(".list-aluno");
-        var aluno = await adicionarAluno(value, turmaId);
-        await adicionarNota(aluno.id);
-        alunoList.innerHTML += criarAlunoItem(aluno);
+        var alunoId = await adicionarAluno(value, turmaId);
+        await adicionarNota(alunoId);
+        alunos = await findAlunoByTurma(turmaId);
+        criarPanels();
         campoNome.value = "";
+        abrirEditarListAluno();
     }
 }
 
 window.removerAluno = async function(id) {
-    removerAluno(id);
-    criarAlunoList();
+    await removerNotas(id);
+    await removerAluno(id);
+    alunos = await findAlunoByTurma(turmaId);
+    criarPanels();
+    abrirEditarListAluno();
 }
 
 init();
