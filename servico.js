@@ -1,7 +1,7 @@
 // service.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, doc, getDoc, query, where, deleteDoc, orderBy, updateDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -80,6 +80,18 @@ export async function removerAluno(alunoId) {
       console.log(`Aluno com ID ${alunoId} removido com sucesso!`);
   } catch (error) {
       console.error("Erro ao remover o documento:", error);
+  }
+}
+
+export async function updateAluno(id, dados) {
+  try {
+    const docRef = doc(db, "aluno", id);
+
+    await updateDoc(docRef, dados);
+
+    console.log("Aluno atualizado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar o aluno:", error);
   }
 }
 

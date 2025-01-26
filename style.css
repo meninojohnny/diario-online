@@ -194,6 +194,15 @@ hr {
     gap: 10px;
 }
 
+.edit-nome-aluno {
+    background-color: white;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 5px;
+    display: none;
+}
+
 .btn-add-aluno {
     color: white;
     padding: 6px 10px;
@@ -202,14 +211,29 @@ hr {
     background-color: #2ec4b6;
 }
 
-.btn-remove-aluno {
+.btn-remove-aluno,
+.btn-edit-aluno,
+.btn-cancel-aluno,
+.btn-save-aluno {
     color: white;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #e71d36;
     display: flex;
     align-items: center;
     padding-left: 10px;
+}
+
+.btn-remove-aluno,
+.btn-cancel-aluno {
+    background-color: #e71d36;
+    display: none;
+}
+.btn-edit-aluno {
+    background-color: #00b4d8;
+    display: none;
+}
+.btn-save-aluno {
+    background-color: #38b000;
     display: none;
 }
 
@@ -224,7 +248,6 @@ hr {
 .aluno-item {
     display: flex;
     margin-bottom: 10px;
-
     gap: 10px;
 }
 
@@ -236,7 +259,7 @@ hr {
     font-size: 1rem;
     display: flex;
     align-items: center;
-    padding: 0px 15px;
+    padding: 2px 15px;
     box-shadow: 0px 0px 5px rgba(73, 80, 87, .4);
 }
 

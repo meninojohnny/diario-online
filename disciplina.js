@@ -3,7 +3,7 @@ import {
     findAlunoByTurma, findNota, 
     findRegistro, adicionarNota, 
     adicionarAluno, removerAluno, 
-    removerNotas} from './servico.js';
+    removerNotas, updateAluno} from './servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
@@ -62,9 +62,13 @@ function criarAlunoItem(item) {
     const alunoItem = `<div class="aluno-item">
                             <div class="aluno-item-content">
                                 <i class="fa-solid fa-user"></i>
-                                <span class="nome-aluno">${item.nome}</span>
+                                <span class="nome-aluno nome-aluno-item-${item.id}">${item.nome}</span>
+                                <span><input type="text" class="edit-nome-aluno form-aluno-item-${item.id}" value='${item.nome}' aria-label="Username" aria-describedby="basic-addon1"></span> 
                             </div>
-                            <span id=${item.id} onclick="removerAluno(id)" class="btn-remove-aluno"><i class="fa-solid fa-trash-can"></i></span>
+                            <span id='${item.id}' onclick="editarAlunoItem(id)" class="btn-edit-aluno edit-aluno-item-${item.id}"><i class="fa-solid fa-pen"></i></span>
+                            <span id='${item.id}' onclick="removerAluno(id)" class="btn-remove-aluno remove-aluno-item-${item.id}"><i class="fa-solid fa-trash-can"></i></span>
+                            <span id='${item.id}' onclick="cancelEditAlunoItem(id)" class="btn-cancel-aluno cancel-aluno-item-${item.id}"><i class="fa-solid fa-xmark"></i></span>
+                            <span id='${item.id}' onclick="saveEditAlunoItem(id)" class="btn-save-aluno save-aluno-item-${item.id}"><i class="fa-solid fa-check"></i></span>
                         </div>`;
     return alunoItem;
 }
@@ -125,6 +129,9 @@ window.abrirEditarListAluno = function() {
     document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
         btn.style.display = "flex";
     });
+    document.querySelectorAll(".btn-edit-aluno").forEach(function(btn) {
+        btn.style.display = "flex";
+    });
     document.querySelector(".form-add-aluno").style.display = "flex";
 }
 
@@ -134,7 +141,37 @@ window.fecharEditarListAluno = function() {
     document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
         btn.style.display = "none";
     });
+    document.querySelectorAll(".btn-edit-aluno").forEach(function(btn) {
+        btn.style.display = "none";
+    });
     document.querySelector(".form-add-aluno").style.display = "none";
+}
+
+window.editarAlunoItem = function(id) {
+    document.querySelector(".remove-aluno-item-" + id).style.display = "none";
+    document.querySelector(".edit-aluno-item-" + id).style.display = "none";
+    document.querySelector(".cancel-aluno-item-" + id).style.display = "flex";
+    document.querySelector(".save-aluno-item-" + id).style.display = "flex";
+    document.querySelector(".form-aluno-item-" + id).style.display = "block";
+    document.querySelector(".nome-aluno-item-" + id).style.display = "none";
+}
+
+window.cancelEditAlunoItem = function(id) {
+    document.querySelector(".remove-aluno-item-" + id).style.display = "flex";
+    document.querySelector(".edit-aluno-item-" + id).style.display = "flex";
+    document.querySelector(".cancel-aluno-item-" + id).style.display = "none";
+    document.querySelector(".save-aluno-item-" + id).style.display = "none";
+    document.querySelector(".form-aluno-item-" + id).style.display = "none";
+    document.querySelector(".nome-aluno-item-" + id).style.display = "block";
+}
+
+window.saveEditAlunoItem = async function(id) {
+    var value = document.querySelector(".form-aluno-item-" + id).value;
+    await updateAluno(id, {nome: value});
+    cancelEditAlunoItem(id);
+    alunos = await findAlunoByTurma(turmaId);
+    criarPanels();
+    abrirEditarListAluno();
 }
 
 window.adicionarAluno = async function() {
