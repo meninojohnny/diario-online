@@ -223,6 +223,18 @@ export async function removerNotas(alunoId) {
   }
 }
 
+export async function updateNota(id, dados) {
+  try {
+    const docRef = doc(db, "nota", id);
+
+    await updateDoc(docRef, dados);
+
+    console.log("Nota atualizado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar a nota:", error);
+  }
+}
+
 export async function findRegistro(disciplinaId, turmaId, mes) {
   try {
       const q = query(collection(db, "registro"), 

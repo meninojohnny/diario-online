@@ -46,7 +46,7 @@
     
             </div>
     
-            <div class="panel-aluno-class">
+            <div class="panel-aluno-class" style="display: none;">
 
                 <div class="header-list-alunos">
                     <span class="title-panel"><i class="fa-solid fa-users"></i> Alunos</span>
@@ -70,7 +70,7 @@
     
             </div>
     
-            <div class="panel-nota-class" style="display: none;">
+            <div class="panel-nota-class" >
     
                 <span class="title-panel"><i class="fa-regular fa-clipboard"></i> Notas</span>
     
@@ -79,8 +79,14 @@
                 <div class="list-nota">
     
                     <div class="periodo">
-    
-                        <div class="periodo-title">1° Período</div>
+
+                        <div class="header-nota-list">
+                            <div class="periodo-title">1° Período</div>
+                            <div class="btns-aluno-list">
+                                <span class="btn-edit-list-notas-primeiro btn-edit-list-notas" onclick="abrirEditarListNota('primeiro')"><i class="fa-solid fa-pen"></i></span>
+                                <span class="btn-cancel-list-notas-primeiro btn-cancel-list-notas" onclick="fecharEditarListNota('primeiro')"><i class="fa-solid fa-xmark"></i></span>
+                            </div>
+                        </div>
     
                         <div class="aluno-item-content nota-header">
                             <span class="nome-aluno">Nome</span>
@@ -97,7 +103,13 @@
     
                     <div class="periodo">
     
-                        <div class="periodo-title">2° Período</div>
+                        <div class="header-nota-list">
+                            <div class="periodo-title">2° Período</div>
+                            <div class="btns-aluno-list">
+                                <span class="btn-edit-list-notas-segundo btn-edit-list-notas" onclick="abrirEditarListNota('segundo')"><i class="fa-solid fa-pen"></i></span>
+                                <span class="btn-cancel-list-notas-segundo btn-cancel-list-notas" onclick="fecharEditarListNota('segundo')"><i class="fa-solid fa-xmark"></i></span>
+                            </div>
+                        </div>
     
                         <div class="aluno-item-content nota-header">
                             <span class="nome-aluno">Nome</span>
@@ -114,7 +126,13 @@
     
                     <div class="periodo">
     
-                        <div class="periodo-title">3° Período</div>
+                        <div class="header-nota-list">
+                            <div class="periodo-title">3° Período</div>
+                            <div class="btns-aluno-list">
+                                <span class="btn-edit-list-notas-terceiro btn-edit-list-notas" onclick="abrirEditarListNota('terceiro')"><i class="fa-solid fa-pen"></i></span>
+                                <span class="btn-cancel-list-notas-terceiro btn-cancel-list-notas" onclick="fecharEditarListNota('terceiro')"><i class="fa-solid fa-xmark"></i></span>
+                            </div>
+                        </div>
     
                         <div class="aluno-item-content nota-header">
                             <span class="nome-aluno">Nome</span>
@@ -131,7 +149,13 @@
     
                     <div class="periodo">
     
-                        <div class="periodo-title">4° Período</div>
+                        <div class="header-nota-list">
+                            <div class="periodo-title">4° Período</div>
+                            <div class="btns-aluno-list">
+                                <span class="btn-edit-list-notas-quarto btn-edit-list-notas" onclick="abrirEditarListNota('quarto')"><i class="fa-solid fa-pen"></i></span>
+                                <span class="btn-cancel-list-notas-quarto btn-cancel-list-notas" onclick="fecharEditarListNota('quarto')"><i class="fa-solid fa-xmark"></i></span>
+                            </div>
+                        </div>
     
                         <div class="aluno-item-content nota-header">
                             <span class="nome-aluno">Nome</span>

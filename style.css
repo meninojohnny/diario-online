@@ -157,6 +157,13 @@ hr {
     align-items: center;
 }
 
+.header-nota-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .btns-aluno-list {
     display: flex;
     gap: 6px;
@@ -164,6 +171,8 @@ hr {
 
 .btn-edit-list-alunos,
 .btn-cancel-list-alunos,
+.btn-edit-list-notas,
+.btn-cancel-list-notas,
 .btn-save-list-alunos {
     color: white;
     padding: 6px 10px;
@@ -171,11 +180,13 @@ hr {
     cursor: pointer;
 }
 
-.btn-edit-list-alunos {
+.btn-edit-list-alunos,
+.btn-edit-list-notas {
     background-color: #00b4d8;
 }
 
-.btn-cancel-list-alunos {
+.btn-cancel-list-alunos,
+.btn-cancel-list-notas {
     background-color: #ef233c;
     display: none;
 }
@@ -213,6 +224,12 @@ hr {
 
 .btn-remove-aluno,
 .btn-edit-aluno,
+.btn-edit-nota-primeiro,
+.btn-edit-nota-segundo,
+.btn-edit-nota-terceiro,
+.btn-edit-nota-quarto,
+.btn-cancel-nota,
+.btn-save-nota,
 .btn-cancel-aluno,
 .btn-save-aluno {
     color: white;
@@ -224,7 +241,8 @@ hr {
 }
 
 .btn-remove-aluno,
-.btn-cancel-aluno {
+.btn-cancel-aluno,
+.btn-cancel-nota {
     background-color: #e71d36;
     display: none;
 }
@@ -232,7 +250,8 @@ hr {
     background-color: #00b4d8;
     display: none;
 }
-.btn-save-aluno {
+.btn-save-aluno,
+.btn-save-nota {
     background-color: #38b000;
     display: none;
 }
@@ -241,17 +260,33 @@ hr {
     background-color: #1c786f;
 }
 
+.btn-edit-nota-primeiro,
+.btn-edit-nota-segundo,
+.btn-edit-nota-terceiro,
+.btn-edit-nota-quarto {
+    background-color: #00b4d8;
+    display: none;
+    padding: 0px 10px;
+}
+
+.btn-cancel-nota,
+.btn-save-nota {
+    padding: 0px 10px;
+}
+
 .list-aluno {
     margin-top: 15px;
 }
 
-.aluno-item {
+.aluno-item,
+.nota-item {
     display: flex;
     margin-bottom: 10px;
     gap: 10px;
 }
 
-.aluno-item-content {
+.aluno-item-content,
+.nota-item-content {
     background-color: #0a9396;
     width: 100%;
     border-radius: 10px;
@@ -287,7 +322,6 @@ hr {
     color: white;
     display: inline-block;
     border-radius: 10px;
-    margin-bottom: 15px;
     font-weight: bold;
 }
 
@@ -296,13 +330,24 @@ hr {
 .nota-aluno-ti,
 .nota-aluno-p,
 .nota-aluno-av,
-.nota-aluno-m {
+.nota-aluno-m  {
     border-left: 1px solid white;
     width: 100px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.edit-nota-tg,
+.edit-nota-ti,
+.edit-nota-p,
+.edit-nota-av,
+.edit-nota-m {
+    width: 70px;
+    height: 50px;
+    text-align: center;
+    display: none;
 }
 
 .nota-header {

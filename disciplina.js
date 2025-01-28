@@ -3,7 +3,8 @@ import {
     findAlunoByTurma, findNota, 
     findRegistro, adicionarNota, 
     adicionarAluno, removerAluno, 
-    removerNotas, updateAluno} from './servico.js';
+    removerNotas, updateAluno,
+    updateNota} from './servico.js';
 var params = ""
 var disciplinaId = ""
 var turmaId = ""
@@ -24,9 +25,9 @@ async function init() {
         mostrarMain();
 }
 
-function criarPanels() {
+async function criarPanels() {
     criarAlunoList();
-    criarNotaList();
+    await criarNotaList();
 }
 
 function mostrarMain() {
@@ -67,8 +68,8 @@ function criarAlunoItem(item) {
                             </div>
                             <span id='${item.id}' onclick="editarAlunoItem(id)" class="btn-edit-aluno edit-aluno-item-${item.id}"><i class="fa-solid fa-pen"></i></span>
                             <span id='${item.id}' onclick="removerAluno(id)" class="btn-remove-aluno remove-aluno-item-${item.id}"><i class="fa-solid fa-trash-can"></i></span>
-                            <span id='${item.id}' onclick="cancelEditAlunoItem(id)" class="btn-cancel-aluno cancel-aluno-item-${item.id}"><i class="fa-solid fa-xmark"></i></span>
                             <span id='${item.id}' onclick="saveEditAlunoItem(id)" class="btn-save-aluno save-aluno-item-${item.id}"><i class="fa-solid fa-check"></i></span>
+                            <span id='${item.id}' onclick="cancelEditAlunoItem(id)" class="btn-cancel-aluno cancel-aluno-item-${item.id}"><i class="fa-solid fa-xmark"></i></span>
                         </div>`;
     return alunoItem;
 }
@@ -87,18 +88,40 @@ async function criarNotaList() {
 async function criarNotaItem(aluno, periodo) {
     var nota = await findNota(aluno.id, disciplinaId, periodo);
     nota = nota[0];
-    var notaItem = `<div class="aluno-item">
-                <div class="aluno-item-content">
-                    <span class="nome-aluno">${aluno.nome}</span>
-                    <span class="nota-aluno-tg">${nota.tg}</span>
-                    <span class="nota-aluno-ti">${nota.ti}</span>
-                    <span class="nota-aluno-p">${nota.p}</span>
-                    <span class="nota-aluno-av">${nota.av}</span>
-                    <span class="nota-aluno-m">${nota.m}</span>
-                <div>
-            </div>`;
+    var notaItem = `
+        <div class="nota-item">
+            <div class="nota-item-content">
+                <span class="nome-aluno">${aluno.nome}</span>
+                <div class="nota-aluno-tg">
+                <span class="nota-valor-${nota.id} nota-valor">${nota.tg}</span>
+                <span><input type="text" class="edit-nota-tg form-nota-item-tg-${nota.id}" value='${nota.tg}' aria-label="Username" aria-describedby="basic-addon1"></span> 
+                </div>
+                <div class="nota-aluno-ti">
+                <span class="nota-valor-${nota.id} nota-valor">${nota.ti}</span>
+                <span><input type="text" class="edit-nota-ti form-nota-item-ti-${nota.id}" value='${nota.ti}' aria-label="Username" aria-describedby="basic-addon1"></span> 
+                </div>
+                <div class="nota-aluno-p">
+                <span class="nota-valor-${nota.id} nota-valor">${nota.p}</span>                
+                <span><input type="text" class="edit-nota-p form-nota-item-p-${nota.id}" value='${nota.p}' aria-label="Username" aria-describedby="basic-addon1"></span> 
+                </div>
+                <div class="nota-aluno-av">
+                <span class="nota-valor-${nota.id} nota-valor">${nota.av}</span>
+                <span><input type="text" class="edit-nota-av form-nota-item-av-${nota.id}" value='${nota.av}' aria-label="Username" aria-describedby="basic-addon1"></span> 
+                </div>
+                <div class="nota-aluno-m">
+                <span class="nota-valor-${nota.id} nota-valor">${nota.m}</span>
+                <span><input type="text" class="edit-nota-m form-nota-item-m-${nota.id}" value='${nota.m}' aria-label="Username" aria-describedby="basic-addon1"></span> 
+                </div>
+            </div>
+            <span id="${nota.id}" onclick="editarNotaItem(this.id, '${periodo}')" class="btn-edit-nota-${periodo} edit-nota-item-${nota.id}">
+                <i class="fa-solid fa-pen"></i>
+            </span>
+            <span id='${nota.id}' onclick="cancelEditNotaItem(id)" class="btn-cancel-nota cancel-nota-item-${nota.id}"><i class="fa-solid fa-xmark"></i></span>
+            <span id='${nota.id}' onclick="saveEditNotaItem(id, '${periodo}')" class="btn-save-nota save-nota-item-${nota.id}"><i class="fa-solid fa-check"></i></span>
+        </div>`;
     return notaItem;
 }
+
 
 async function criarRegistroList() {
     const meses = ["janeiro", "fevereiro"];
@@ -138,16 +161,24 @@ window.abrirEditarListAluno = function() {
 window.fecharEditarListAluno = function() {
     document.querySelector(".btn-edit-list-alunos").style.display = "block";
     document.querySelector(".btn-cancel-list-alunos").style.display = "none";
-    document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {
-        btn.style.display = "none";
-    });
-    document.querySelectorAll(".btn-edit-aluno").forEach(function(btn) {
-        btn.style.display = "none";
-    });
-    document.querySelector(".form-add-aluno").style.display = "none";
+    document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-edit-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelector(".edit-nome-aluno").style.display = "none";
+    document.querySelectorAll(".edit-nome-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".nome-aluno").forEach(function(btn) {btn.style.display = "block";});
+    document.querySelectorAll(".btn-cancel-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-save-aluno").forEach(function(btn) {btn.style.display = "none";});
 }
 
 window.editarAlunoItem = function(id) {
+    document.querySelectorAll(".btn-cancel-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-save-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-edit-aluno").forEach(function(btn) {btn.style.display = "flex";});
+
+    document.querySelectorAll(".btn-remove-aluno").forEach(function(btn) {btn.style.display = "flex";});
+    document.querySelectorAll(".edit-nome-aluno").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".nome-aluno").forEach(function(btn) {btn.style.display = "block";});
+
     document.querySelector(".remove-aluno-item-" + id).style.display = "none";
     document.querySelector(".edit-aluno-item-" + id).style.display = "none";
     document.querySelector(".cancel-aluno-item-" + id).style.display = "flex";
@@ -193,6 +224,81 @@ window.removerAluno = async function(id) {
     alunos = await findAlunoByTurma(turmaId);
     criarPanels();
     abrirEditarListAluno();
+}
+
+window.abrirEditarListNota = function(periodo) {
+    fecharEditarListNota("primeiro");
+    fecharEditarListNota("segundo");
+    fecharEditarListNota("terceiro");
+    fecharEditarListNota("quarto");
+
+    document.querySelector(".btn-edit-list-notas-" + periodo).style.display = "none";
+    document.querySelectorAll(".btn-edit-nota-" + periodo).forEach(function(btn) {btn.style.display = "flex";});
+    document.querySelector(".btn-cancel-list-notas-" + periodo).style.display = "block";
+}
+
+window.fecharEditarListNota = function(periodo) {
+    document.querySelector(".btn-edit-list-notas-" + periodo).style.display = "block";
+    document.querySelectorAll(".btn-edit-nota-" + periodo).forEach(function(btn) {btn.style.display = "none";});
+    document.querySelector(".btn-cancel-list-notas-" + periodo).style.display = "none";
+    document.querySelectorAll(".edit-nota-tg").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-ti").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-av").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-p").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-m").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-tg").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".nota-valor").forEach(function(btn) {btn.style.display = "block";});
+    document.querySelectorAll(".btn-cancel-nota").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-save-nota").forEach(function(btn) {btn.style.display = "none";});
+}
+
+window.editarNotaItem = function(id, periodo) {
+    document.querySelectorAll(".btn-cancel-nota").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-save-nota").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".btn-edit-nota-" + periodo).forEach(function(btn) {btn.style.display = "flex";});
+    document.querySelectorAll(".nota-valor").forEach(function(btn) {btn.style.display = "block";});
+    document.querySelectorAll(".edit-nota-tg").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-ti").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-p").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-av").forEach(function(btn) {btn.style.display = "none";});
+    document.querySelectorAll(".edit-nota-m").forEach(function(btn) {btn.style.display = "none";});
+
+    document.querySelector(".cancel-nota-item-" + id).style.display = "flex";
+    document.querySelector(".save-nota-item-" + id).style.display = "flex";
+    document.querySelector(".edit-nota-item-" + id).style.display = "none";
+    document.querySelectorAll(".nota-valor-" + id).forEach(function(btn) {btn.style.display = "none";});
+    document.querySelector(".form-nota-item-tg-" + id).style.display = "block";
+    document.querySelector(".form-nota-item-ti-" + id).style.display = "block";
+    document.querySelector(".form-nota-item-p-" + id).style.display = "block";
+    document.querySelector(".form-nota-item-av-" + id).style.display = "block";
+    document.querySelector(".form-nota-item-m-" + id).style.display = "block";
+}
+
+window.cancelEditNotaItem = function(id) {
+    document.querySelector(".edit-nota-item-" + id).style.display = "flex";
+    document.querySelector(".cancel-nota-item-" + id).style.display = "none";
+    document.querySelector(".save-nota-item-" + id).style.display = "none";
+    document.querySelectorAll(".nota-valor-" + id).forEach(function(btn) {btn.style.display = "block";});
+    document.querySelector(".form-nota-item-tg-" + id).style.display = "none";
+    document.querySelector(".form-nota-item-ti-" + id).style.display = "none";
+    document.querySelector(".form-nota-item-p-" + id).style.display = "none";
+    document.querySelector(".form-nota-item-av-" + id).style.display = "none";
+    document.querySelector(".form-nota-item-m-" + id).style.display = "none";
+}
+
+window.saveEditNotaItem = async function(id, periodo) {
+    var tg = document.querySelector(".form-nota-item-tg-" + id).value;
+    var ti = document.querySelector(".form-nota-item-ti-" + id).value;
+    var p = document.querySelector(".form-nota-item-p-" + id).value;
+    var av = document.querySelector(".form-nota-item-av-" + id).value;
+    var m = document.querySelector(".form-nota-item-m-" + id).value;
+
+    var dado = {tg: tg, ti: ti, p: p, av: av, m: m};
+    await updateNota(id, dado);
+    cancelEditNotaItem(id);
+    alunos = await findAlunoByTurma(turmaId);
+    await criarPanels();
+    abrirEditarListNota(periodo);
 }
 
 init();
